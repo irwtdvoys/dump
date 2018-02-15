@@ -16,6 +16,9 @@
     "autoload": {
         "psr-4": {
             "Cruxoft\\": "src/"
-        }
+        },
+        "files": [
+            "src/dump.php"
+        ]
     }
 }
