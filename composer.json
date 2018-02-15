@@ -1,0 +1,21 @@
+{
+    "name": "cruxoft/dump",
+    "description": "A system for generating structure information about nested variables for use including screen display",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
+    },
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Steve Adams",
+            "email": "irwtdvoys@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Cruxoft\\": "src/"
+        }
+    }
+}
