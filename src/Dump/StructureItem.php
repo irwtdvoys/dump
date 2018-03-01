@@ -26,6 +26,11 @@
 
 			$output .= $this->type;
 
+			if (isset($this->count))
+			{
+				$output .= "(" . $this->count . ")";
+			}
+
 			if (isset($this->value) || isset($this->children))
 			{
 				$output .= ": ";
