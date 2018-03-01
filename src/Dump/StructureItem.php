@@ -79,11 +79,13 @@
 					$this->value = $object;
 					break;
 				case "string":
-					$this->type = $type . "(" . strlen($object) . ")";
+					$this->type = $type;
+					$this->count = strlen($object);
 					$this->value = "\"" . (string)$object . "\"";
 					break;
 				case "array":
-					$this->type = $type . "(" . count($object) . ")";
+					$this->type = $type;
+					$this->count = count($object);
 					$this->children = array();
 
 					foreach ($object as $key => $value)
@@ -123,7 +125,7 @@
 					{
 						if ($object === $resource)
 						{
-							$this->type .= "(" . $key . ")";
+							$this->count = (integer)$key;
 							break;
 						}
 					}
