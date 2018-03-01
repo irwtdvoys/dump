@@ -14,7 +14,11 @@ $ composer require cruxoft/dump
 
 ## Usage
 
-Some simple usage examples of `Dump` would be as follows:
+For details on full basic usage and more complex examples see the `examples/` folder.
+
+### Output Function
+
+Some simple output based usage examples of the built in `dump()` function would be as follows:
 
 ```php
 use function Cruxoft\dump;
