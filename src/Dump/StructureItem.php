@@ -4,6 +4,7 @@
 	class StructureItem
 	{
 		public $type;
+		public $count;
 		public $value;
 		public $children;
 
