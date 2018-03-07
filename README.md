@@ -60,8 +60,8 @@ It uses the latest PHP7 FPM image and can be built and entered:
 
 ```sh
 $ cd docker
-$ docker-compose up
-$ docker exec -it php_1 bash
+$ docker-compose -p dump up
+$ docker exec -it dump_php_1 bash
 
 $ cd /code/
 ```
