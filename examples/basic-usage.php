@@ -1,6 +1,6 @@
 <?php
 
-	define("ROOT_SERVER", __DIR__ . "tmp.php/");
+	define("ROOT_SERVER", __DIR__ . "/../");
 
 	require_once(ROOT_SERVER . "vendor/autoload.php");
 
