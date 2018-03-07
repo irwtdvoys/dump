@@ -70,3 +70,4 @@ $ cd /code/
 
 + Ability to specify formatting parameters for output of dump function
 + Additional built-in conversions of structure data (json, xml, etc)
++ Coloured output
