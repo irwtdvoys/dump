@@ -17,7 +17,7 @@
 	dump(7);
 
 	echo("\nFloat\n");
-	dump(3.1415);
+	dump(3.14159265359);
 
 	echo("\nString\n");
 	dump("Hello World");

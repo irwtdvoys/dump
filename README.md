@@ -1,4 +1,4 @@
-# Dump (0.2.1)
+# Dump (0.2.2)
 
 ## What is it?
 
@@ -60,10 +60,16 @@ It uses the latest PHP7 FPM image and can be built and entered:
 
 ```sh
 $ cd docker
-$ docker-compose -p dump up
+$ docker-compose -p dump up -d
 $ docker exec -it dump_php_1 bash
 
 $ cd /code/
+```
+
+The container can be torn down with:
+
+```sh
+$ docker-compose stop
 ```
 
 ## Road Map
