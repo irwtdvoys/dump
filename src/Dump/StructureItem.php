@@ -3,17 +3,17 @@
 
 	class StructureItem
 	{
-		public $type;
-		public $count;
+		public string $type;
+		public int $count;
 		public $value;
-		public $children;
+		public array $children;
 
-		public $level = 0;
-		public $isChild = false;
+		public int $level = 0;
+		public bool $isChild = false;
 
-		public function __toString()
+		public function __toString(): string
 		{
-			$pattern = "    ";
+			$pattern = "\t";
 
 			$spacer = str_repeat($pattern, $this->level);
 
