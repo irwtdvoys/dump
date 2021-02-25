@@ -1,9 +1,10 @@
 <?php
+	define("CRUXOFT_ROOT", realpath(__DIR__ . "/../") . "/");
+	putenv("CRUXOFT_DUMP_DEFAULT=" . Options::INCLUDE_LOCATION);
 
-	define("ROOT_SERVER", __DIR__ . "/../");
+	require_once(CRUXOFT_ROOT . "vendor/autoload.php");
 
-	require_once(ROOT_SERVER . "vendor/autoload.php");
-
+	use Cruxoft\Dump\Options;
 	use function Cruxoft\dump;
 
 	class Temp
@@ -13,35 +14,40 @@
 		public $three = 3;
 	}
 
-	echo("\nInteger\n");
-	dump(7);
+	function section(string $name): void
+	{
+		echo(PHP_EOL . $name . PHP_EOL);
+	}
 
-	echo("\nFloat\n");
+	section("Integer");
+	dump(7, Options::NONE);
+
+	section("Float");
 	dump(3.14159265359);
 
-	echo("\nString\n");
+	section("String");
 	dump("Hello World");
 
-	echo("\nBooleans\n");
+	section("Booleans");
 	dump(true);
 	dump(false);
 
-	echo("\nNull\n");
+	section("Null");
 	dump(null);
 
-	echo("\nArrays\n");
+	section("Arrays");
 	dump(array());
 	dump(array("one", "two", "three"));
 	dump(array(1, 2, 3));
 	dump(array("one" => "first", "two" => "second", "three" => "third"));
 	dump(array("one", false, 3));
 
-	echo("\nObject\n");
+	section("Object");
 	dump((object)array("one" => "first", "two" => "second", "three" => "third"));
 
-	echo("\nClass\n");
+	section("Class");
 	dump(new Temp());
 
-	echo("\nResource\n");
+	section("Resource");
 	dump(curl_init());
 ?>

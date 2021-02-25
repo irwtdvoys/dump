@@ -2,7 +2,7 @@
 
 ## What is it?
 
-An alternative to `var_dump` or `print_r` for generating structure information about variables to then be output.  
+An alternative to `var_dump` or `print_r` for generating structure information about variables to then be output.
 
 ## Installation
 
@@ -40,6 +40,24 @@ array(3):
 boolean: true
 string(11): "Hello World"
 ```
+
+The `dump` method can take an optional `options` parameter as a bitwise value of the required options. Available options are:
+
++ **INCLUDE_LOCATION**: Gives the file and line number of the `dump` call.
++ **DIE_AFTER**: Calls `die()` after the `dump` method is completed.
+
+```php
+use Cruxoft\Dump\Options;
+use function Cruxoft\dump;
+
+dump("Hello World", Options::INCLUDE_LOCATION);
+```
+
+```
+examples/file.php@4
+string(11): "Hello World"
+```
+
 ## Development
 
 ### Docker
@@ -77,3 +95,5 @@ $ docker-compose stop
 + Ability to specify formatting parameters for output of dump function
 + Additional built-in conversions of structure data (json, xml, etc)
 + Coloured output
++ Handling recursion
++ Options
