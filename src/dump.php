@@ -13,5 +13,10 @@
 		}
 
 		echo(new StructureItem($object) . "\n");
+
+		if (($options & Options::DIE_AFTER) === Options::DIE_AFTER)
+		{
+			die();
+		}
 	}
 ?>
