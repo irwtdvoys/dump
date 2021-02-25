@@ -18,6 +18,11 @@
 			$debug = debug_backtrace();
 			$path = $debug[0]['file'];
 
+			if (defined("CRUXOFT_ROOT"))
+			{
+				$path = str_replace(realpath(CRUXOFT_ROOT) . "/", "", $path);
+			}
+
 			echo($path . "@" . $debug[0]['line'] . PHP_EOL);
 		}
 
