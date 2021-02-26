@@ -1,11 +1,12 @@
 <?php
 	define("CRUXOFT_ROOT", realpath(__DIR__ . "/../") . "/");
-	putenv("CRUXOFT_DUMP_DEFAULT=" . Options::INCLUDE_LOCATION);
-
-	require_once(CRUXOFT_ROOT . "vendor/autoload.php");
 
 	use Cruxoft\Dump\Options;
 	use function Cruxoft\dump;
+
+	require_once(CRUXOFT_ROOT . "vendor/autoload.php");
+
+	putenv("CRUXOFT_DUMP_DEFAULT=" . (Options::ALL & ~Options::DIE_AFTER));
 
 	class Temp
 	{
