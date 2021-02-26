@@ -11,7 +11,7 @@
 		{
 			$default = getenv("CRUXOFT_DUMP_DEFAULT");
 
-			$options = $default === false ? 0 : (int)$default;
+			$options = $default === false ? Options::DEFAULT : (int)$default;
 		}
 
 		if (($options & Options::INCLUDE_LOCATION) === Options::INCLUDE_LOCATION)
