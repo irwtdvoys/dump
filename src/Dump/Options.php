@@ -3,8 +3,12 @@
 
 	class Options
 	{
-		const NONE = 0;
 		const INCLUDE_LOCATION = 1;
-		const DIE_AFTER = 2;
+		const RELATIVE_PATHS = 2;
+		const DIE_AFTER = 4;
+
+		const NONE = 0;
+		const DEFAULT = 0;
+		const ALL = 127;
 	}
 ?>

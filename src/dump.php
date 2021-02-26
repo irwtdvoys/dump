@@ -3,6 +3,7 @@
 
 	use Cruxoft\Dump\Options;
 	use Cruxoft\Dump\StructureItem;
+	use Exception;
 
 	function dump($object, $options = null): void
 	{
@@ -10,7 +11,7 @@
 		{
 			$default = getenv("CRUXOFT_DUMP_DEFAULT");
 
-			$options = $default === false ? 0 : (int)$default;
+			$options = $default === false ? Options::DEFAULT : (int)$default;
 		}
 
 		if (($options & Options::INCLUDE_LOCATION) === Options::INCLUDE_LOCATION)
@@ -18,8 +19,13 @@
 			$debug = debug_backtrace();
 			$path = $debug[0]['file'];
 
-			if (defined("CRUXOFT_ROOT"))
+			if (($options & Options::RELATIVE_PATHS) === Options::RELATIVE_PATHS)
 			{
+				if (!defined("CRUXOFT_ROOT"))
+				{
+					throw new Exception("Constant 'CRUXOFT_ROOT' must be set to use relative paths");
+				}
+
 				$path = str_replace(realpath(CRUXOFT_ROOT) . "/", "", $path);
 			}
 
