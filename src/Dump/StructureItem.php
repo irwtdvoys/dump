@@ -101,7 +101,7 @@
 				case "object":
 					$id = spl_object_id($object);
 					$class = get_class($object);
-					$this->type = ($class === "stdClass") ? $type : "class";
+					$this->type = (($class === "stdClass") ? $type : "class") . "(#" . $id . ")";
 
 					if ($class !== "stdClass")
 					{
