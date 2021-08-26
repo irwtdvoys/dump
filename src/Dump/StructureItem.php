@@ -45,7 +45,6 @@
 			{
 				$output .= "\n" . $spacer . "(\n";
 
-
 				foreach ($this->children as $key => $item)
 				{
 					if (!is_numeric($key))
@@ -54,8 +53,6 @@
 					}
 					$output .= $spacer . $pattern . "[" . $key . "] " . $item . "\n";
 				}
-
-
 
 				$output .= $spacer . ")";
 			}
