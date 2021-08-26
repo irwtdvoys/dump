@@ -50,5 +50,5 @@
 	dump(new Temp());
 
 	section("Resource");
-	dump(curl_init());
+	dump(fopen("php://memory", "rw"));
 ?>
