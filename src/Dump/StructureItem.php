@@ -60,7 +60,7 @@
 			return $output;
 		}
 
-		public function __construct($object = null, $level = 0)
+		public function __construct($object = null, int $level = 0, array $cache = [])
 		{
 			$type = gettype($object);
 
@@ -92,7 +92,7 @@
 
 					foreach ($object as $key => $value)
 					{
-						$child = new StructureItem($value, ($level + 1));
+						$child = new StructureItem($value, ($level + 1), $cache);
 						$child->isChild = true;
 						$this->children[$key] = $child;
 					}
@@ -111,7 +111,7 @@
 
 					foreach ($object as $key => $value)
 					{
-						$child = new StructureItem($value, ($level + 1));
+						$child = new StructureItem($value, ($level + 1), $cache);
 						$child->isChild = true;
 						$this->children[$key] = $child;
 					}
