@@ -99,6 +99,7 @@
 
 					break;
 				case "object":
+					$id = spl_object_id($object);
 					$class = get_class($object);
 					$this->type = ($class === "stdClass") ? $type : "class";
 
@@ -107,13 +108,18 @@
 						$this->value = $class;
 					}
 
-					$this->children = array();
-
-					foreach ($object as $key => $value)
+					if (!in_array($id, $cache))
 					{
-						$child = new StructureItem($value, ($level + 1), $cache);
-						$child->isChild = true;
-						$this->children[$key] = $child;
+						$cache[] = $id;
+
+						$this->children = array();
+
+						foreach ($object as $key => $value)
+						{
+							$child = new StructureItem($value, ($level + 1), $cache);
+							$child->isChild = true;
+							$this->children[$key] = $child;
+						}
 					}
 
 					break;
