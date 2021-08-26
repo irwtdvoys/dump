@@ -51,4 +51,9 @@
 
 	section("Resource");
 	dump(curl_init());
+
+	section("Recursion");
+	$tmp = new Temp();
+	$tmp->one = $tmp;
+	dump($tmp);
 ?>
