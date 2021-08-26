@@ -121,6 +121,10 @@
 							$this->children[$key] = $child;
 						}
 					}
+					else
+					{
+						$this->value = trim($this->value . " (RECURSION)");
+					}
 
 					break;
 				case "resource":
