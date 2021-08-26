@@ -60,7 +60,7 @@
 			return $output;
 		}
 
-		public function __construct($object = null, $level = 0)
+		public function __construct($object = null, int $level = 0, array $cache = [])
 		{
 			$type = gettype($object);
 
@@ -92,28 +92,38 @@
 
 					foreach ($object as $key => $value)
 					{
-						$child = new StructureItem($value, ($level + 1));
+						$child = new StructureItem($value, ($level + 1), $cache);
 						$child->isChild = true;
 						$this->children[$key] = $child;
 					}
 
 					break;
 				case "object":
+					$id = spl_object_id($object);
 					$class = get_class($object);
-					$this->type = ($class === "stdClass") ? $type : "class";
+					$this->type = (($class === "stdClass") ? $type : "class") . "(#" . $id . ")";
 
 					if ($class !== "stdClass")
 					{
 						$this->value = $class;
 					}
 
-					$this->children = array();
-
-					foreach ($object as $key => $value)
+					if (!in_array($id, $cache))
 					{
-						$child = new StructureItem($value, ($level + 1));
-						$child->isChild = true;
-						$this->children[$key] = $child;
+						$cache[] = $id;
+
+						$this->children = array();
+
+						foreach ($object as $key => $value)
+						{
+							$child = new StructureItem($value, ($level + 1), $cache);
+							$child->isChild = true;
+							$this->children[$key] = $child;
+						}
+					}
+					else
+					{
+						$this->value = trim($this->value . " (RECURSION)");
 					}
 
 					break;
