@@ -1,4 +1,4 @@
-# Dump (0.3.1)
+# Dump (0.3.2)
 
 ## What is it?
 
@@ -69,19 +69,17 @@ Your installed PHP version can be found with the following command:
 ```sh
 $ php -v
 
-PHP 7.2.1 (cli) (built: Jan  8 2018 23:39:24) ( NTS )
-Copyright (c) 1997-2017 The PHP Group
-Zend Engine v3.2.0, Copyright (c) 1998-2017 Zend Technologies
+PHP 8.0.7 (cli) (built: Jun 23 2021 12:34:03) ( NTS )
+Copyright (c) The PHP Group
+Zend Engine v4.0.7, Copyright (c) Zend Technologies
 ```
 
-It uses the latest PHP7 FPM image and can be built and entered:
+It uses the latest PHP8 FPM image with composer added and can be built and entered:
 
 ```sh
 $ cd docker
 $ docker-compose -p dump up -d
 $ docker exec -it dump_php_1 bash
-
-$ cd /code/
 ```
 
 The container can be torn down with:

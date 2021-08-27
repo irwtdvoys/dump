@@ -2,6 +2,7 @@ version: "3"
 
 services:
   php:
-    image: php:7-fpm
+    build: .
     volumes:
       - ../:/code
+    working_dir: /code
