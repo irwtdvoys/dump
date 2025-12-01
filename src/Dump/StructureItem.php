@@ -130,17 +130,8 @@
 				case "resource":
 					$this->type = $type;
 					$this->value = get_resource_type($object);
-
 					$resources = get_resources($this->value);
-
-					foreach ($resources as $key => $resource)
-					{
-						if ($object === $resource)
-						{
-							$this->count = (integer)$key;
-							break;
-						}
-					}
+					$this->count = (int)array_search($object, $resources, true);
 
 					if ($this->value === "stream")
 					{
