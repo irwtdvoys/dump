@@ -2,6 +2,7 @@
 	namespace Cruxoft\Dump;
 
 	use ReflectionClass;
+    use UnitEnum;
 
     class StructureItem
 	{
@@ -116,7 +117,12 @@
 
 						$this->children = array();
 
-						foreach ($object as $key => $value)
+                        if ($object instanceof UnitEnum)
+                        {
+                            $this->type = "enum";
+                            $this->value .= "::" . $object->name;
+                            unset($this->children);
+                        }
                         elseif ($class !== "stdClass")
 						{
 							$reflection = new ReflectionClass($class);
