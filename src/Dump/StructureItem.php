@@ -1,7 +1,9 @@
 <?php
 	namespace Cruxoft\Dump;
 
-	class StructureItem
+	use ReflectionClass;
+
+    class StructureItem
 	{
 		public string $type;
 		public int $count;
@@ -83,7 +85,7 @@
 				case "string":
 					$this->type = $type;
 					$this->count = strlen($object);
-					$this->value = "\"" . (string)$object . "\"";
+					$this->value = $object;
 					break;
 				case "array":
 					$this->type = $type;
@@ -115,10 +117,34 @@
 						$this->children = array();
 
 						foreach ($object as $key => $value)
+                        elseif ($class !== "stdClass")
 						{
-							$child = new StructureItem($value, ($level + 1), $cache);
-							$child->isChild = true;
-							$this->children[$key] = $child;
+							$reflection = new ReflectionClass($class);
+							$properties = $reflection->getProperties();
+
+							foreach ($properties as $property)
+							{
+								$details = array_filter([
+									$property->isPublic() ? "public" : null,
+									$property->isProtected() ? "protected" : null,
+									$property->isPrivate() ? "private" : null,
+									$property->isReadOnly() ? "readonly" : null,
+									$property->isStatic() ? "static" : null,
+								]);
+
+								$child = new StructureItem($property->getValue($object), ($level + 1), $cache);
+								$child->isChild = true;
+								$this->children[$property->name . ":" . implode(":", $details)] = $child;
+							}
+						}
+						else
+						{
+							foreach ($object as $key => $value)
+							{
+								$child = new StructureItem($value, ($level + 1), $cache);
+								$child->isChild = true;
+								$this->children[$key] = $child;
+							}
 						}
 					}
 					else
