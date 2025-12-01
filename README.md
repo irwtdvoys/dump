@@ -1,4 +1,4 @@
-# Dump (0.3.2)
+# Dump (0.4.0)
 
 ## What is it?
 
