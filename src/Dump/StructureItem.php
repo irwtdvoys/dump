@@ -1,7 +1,10 @@
 <?php
 	namespace Cruxoft\Dump;
 
-	class StructureItem
+	use ReflectionClass;
+    use UnitEnum;
+
+    class StructureItem
 	{
 		public string $type;
 		public int $count;
@@ -60,7 +63,7 @@
 			return $output;
 		}
 
-		public function __construct($object = null, $level = 0)
+		public function __construct($object = null, int $level = 0, array $cache = [])
 		{
 			$type = gettype($object);
 
@@ -83,7 +86,7 @@
 				case "string":
 					$this->type = $type;
 					$this->count = strlen($object);
-					$this->value = "\"" . (string)$object . "\"";
+					$this->value = $object;
 					break;
 				case "array":
 					$this->type = $type;
@@ -92,45 +95,75 @@
 
 					foreach ($object as $key => $value)
 					{
-						$child = new StructureItem($value, ($level + 1));
+						$child = new StructureItem($value, ($level + 1), $cache);
 						$child->isChild = true;
 						$this->children[$key] = $child;
 					}
 
 					break;
 				case "object":
+					$id = spl_object_id($object);
 					$class = get_class($object);
-					$this->type = ($class === "stdClass") ? $type : "class";
+					$this->type = (($class === "stdClass") ? $type : "class") . "(#" . $id . ")";
 
 					if ($class !== "stdClass")
 					{
 						$this->value = $class;
 					}
 
-					$this->children = array();
-
-					foreach ($object as $key => $value)
+					if (!in_array($id, $cache))
 					{
-						$child = new StructureItem($value, ($level + 1));
-						$child->isChild = true;
-						$this->children[$key] = $child;
+						$cache[] = $id;
+
+						$this->children = array();
+
+                        if ($object instanceof UnitEnum)
+                        {
+                            $this->type = "enum";
+                            $this->value .= "::" . $object->name;
+                            unset($this->children);
+                        }
+                        elseif ($class !== "stdClass")
+						{
+							$reflection = new ReflectionClass($class);
+							$properties = $reflection->getProperties();
+
+							foreach ($properties as $property)
+							{
+								$details = array_filter([
+									$property->isPublic() ? "public" : null,
+									$property->isProtected() ? "protected" : null,
+									$property->isPrivate() ? "private" : null,
+									$property->isReadOnly() ? "readonly" : null,
+									$property->isStatic() ? "static" : null,
+								]);
+
+								$child = new StructureItem($property->getValue($object), ($level + 1), $cache);
+								$child->isChild = true;
+								$this->children[$property->name . ":" . implode(":", $details)] = $child;
+							}
+						}
+						else
+						{
+							foreach ($object as $key => $value)
+							{
+								$child = new StructureItem($value, ($level + 1), $cache);
+								$child->isChild = true;
+								$this->children[$key] = $child;
+							}
+						}
+					}
+					else
+					{
+						$this->value = trim($this->value . " (RECURSION)");
 					}
 
 					break;
 				case "resource":
 					$this->type = $type;
 					$this->value = get_resource_type($object);
-
 					$resources = get_resources($this->value);
-
-					foreach ($resources as $key => $resource)
-					{
-						if ($object === $resource)
-						{
-							$this->count = (integer)$key;
-							break;
-						}
-					}
+					$this->count = (int)array_search($object, $resources, true);
 
 					if ($this->value === "stream")
 					{

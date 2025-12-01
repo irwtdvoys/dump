@@ -1,4 +1,4 @@
-# Dump (0.3.2)
+# Dump (0.4.0)
 
 ## What is it?
 
@@ -44,7 +44,8 @@ string(11): "Hello World"
 The `dump` method can take an optional `options` parameter as a bitwise value of the required options. Available options are:
 
 + **INCLUDE_LOCATION**: Gives the file and line number of the `dump` call.
-+ **DIE_AFTER**: Calls `die()` after the `dump` method is completed.
++ **RELATIVE_PATHS**: Sets paths to be relative to the project root. Requires `CRUXOFT_ROOT` constant to be set.
++ **DIE_AFTER**: Calls `die()` after the `dump` method has completed.
 
 ```php
 use Cruxoft\Dump\Options;
@@ -93,5 +94,3 @@ $ docker-compose stop
 + Ability to specify formatting parameters for output of dump function
 + Additional built-in conversions of structure data (json, xml, etc)
 + Coloured output
-+ Handling recursion
-+ Options

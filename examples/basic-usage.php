@@ -10,10 +10,20 @@
 
 	class Temp
 	{
-		public $one = 1;
-		public $two = 2;
-		public $three = 3;
+		public ?Temp $one = null;
+		protected readonly int $two;
+		static private int $three = 3;
+
+		public function __construct()
+		{
+			$this->two = 2;
+		}
 	}
+
+    enum TestEnum: int {
+        case A = 1;
+        case B = 2;
+    }
 
 	function section(string $name): void
 	{
@@ -36,19 +46,27 @@
 	section("Null");
 	dump(null);
 
+    section("Enum");
+    dump(TestEnum::A);
+
 	section("Arrays");
-	dump(array());
-	dump(array("one", "two", "three"));
-	dump(array(1, 2, 3));
-	dump(array("one" => "first", "two" => "second", "three" => "third"));
-	dump(array("one", false, 3));
+	dump([]);
+	dump(["one", "two", "three"]);
+	dump([1, 2, 3]);
+	dump(["one" => "first", "two" => "second", "three" => "third"]);
+	dump(["one", false, 3]);
 
 	section("Object");
-	dump((object)array("one" => "first", "two" => "second", "three" => "third"));
+	dump((object)["one" => "first", "two" => "second", "three" => "third"]);
 
 	section("Class");
 	dump(new Temp());
 
 	section("Resource");
 	dump(fopen("php://memory", "rw"));
+
+	section("Recursion");
+	$tmp = new Temp();
+	$tmp->one = $tmp;
+	dump($tmp);
 ?>
